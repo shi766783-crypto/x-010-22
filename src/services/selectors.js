@@ -19,6 +19,24 @@ export function planTotalSpend(plan) {
   )
 }
 
+// 预算预警阈值：累计花费达到预算八成即预警
+export const BUDGET_WARN_RATIO = 0.8
+
+// 预算预警状态：none（不提示）/ warning（黄色，≥80%）/ danger（红色，≥100%）
+// 预算为 0 或未填写时一律不触发
+export function planBudgetStatus(plan) {
+  const budget = toNum(plan.budget)
+  const spend = planTotalSpend(plan)
+  if (budget <= 0) {
+    return { level: 'none', budget, spend, ratio: 0, percent: 0 }
+  }
+  const ratio = spend / budget
+  let level = 'none'
+  if (ratio >= 1) level = 'danger'
+  else if (ratio >= BUDGET_WARN_RATIO) level = 'warning'
+  return { level, budget, spend, ratio, percent: Math.round(ratio * 100) }
+}
+
 // 单次出行花费分类汇总
 export function planSpendBreakdown(plan) {
   const records = plan.records || []

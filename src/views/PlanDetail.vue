@@ -8,6 +8,7 @@ import LuggageList from '../components/plan/LuggageList.vue'
 import TodoList from '../components/plan/TodoList.vue'
 import RecordSection from '../components/plan/RecordSection.vue'
 import SummarySection from '../components/plan/SummarySection.vue'
+import BudgetAlert from '../components/common/BudgetAlert.vue'
 
 const store = useTravelStore()
 const route = useRoute()
@@ -69,6 +70,9 @@ function onDelete() {
 
     <!-- 概览 -->
     <div v-if="activeTab === 'overview'" class="card">
+      <!-- 预算预警：达到预算八成黄色提示，达到或超过预算红色提示 -->
+      <BudgetAlert :plan="plan" />
+
       <div class="overview-grid">
         <div class="ov-item"><span>住宿信息</span><strong>{{ plan.accommodation || '未填写' }}</strong></div>
         <div class="ov-item"><span>预算总额</span><strong>{{ formatMoney(plan.budget) }}</strong></div>

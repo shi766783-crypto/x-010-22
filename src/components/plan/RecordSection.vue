@@ -6,6 +6,7 @@ import { planTotalSpend, planSpendBreakdown } from '../../services/selectors'
 import { formatMoney, formatDate } from '../../utils/format'
 import Modal from '../common/Modal.vue'
 import ImageUpload from '../common/ImageUpload.vue'
+import BudgetAlert from '../common/BudgetAlert.vue'
 
 const props = defineProps({
   plan: { type: Object, required: true },
@@ -106,6 +107,9 @@ function save() {
         <strong>{{ formatMoney(Math.abs(balance)) }}</strong>
       </div>
     </div>
+
+    <!-- 预算预警：达到预算八成黄色提示，达到或超过预算红色提示 -->
+    <BudgetAlert :plan="plan" />
 
     <!-- 分类花费 -->
     <div class="breakdown">
