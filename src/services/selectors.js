@@ -19,6 +19,17 @@ export function planTotalSpend(plan) {
   )
 }
 
+// 预算预警级别：预算未设置（0 或空）时不预警；
+// 累计花费达预算 80% 返回 'warning'，达到或超过预算返回 'danger'
+export function planBudgetWarning(plan) {
+  const budget = Number(plan.budget) || 0
+  if (budget <= 0) return null
+  const spend = planTotalSpend(plan)
+  if (spend >= budget) return 'danger'
+  if (spend >= budget * 0.8) return 'warning'
+  return null
+}
+
 // 单次出行花费分类汇总
 export function planSpendBreakdown(plan) {
   const records = plan.records || []

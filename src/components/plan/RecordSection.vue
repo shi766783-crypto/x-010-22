@@ -6,6 +6,7 @@ import { planTotalSpend, planSpendBreakdown } from '../../services/selectors'
 import { formatMoney, formatDate } from '../../utils/format'
 import Modal from '../common/Modal.vue'
 import ImageUpload from '../common/ImageUpload.vue'
+import BudgetAlert from '../common/BudgetAlert.vue'
 
 const props = defineProps({
   plan: { type: Object, required: true },
@@ -91,6 +92,9 @@ function save() {
 
 <template>
   <div>
+    <!-- 预算预警 -->
+    <BudgetAlert :plan="plan" />
+
     <!-- 花费汇总 -->
     <div class="summary-cards">
       <div class="sum-card">
